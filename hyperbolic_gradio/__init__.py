@@ -6,14 +6,22 @@ from typing import Callable
 __version__ = "0.0.3"
 
 
-def get_fn(model_name: str, preprocess: Callable, postprocess: Callable, api_key: str):
+def get_fn(model_name: str, preprocess: Callable, postprocess: Callable, api_key: str, base_url: str = None):
     def fn(message, history):
         inputs = preprocess(message, history)
-        client = OpenAI(api_key=api_key)
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.hyperbolic.xyz/v1"
+        )
         completion = client.chat.completions.create(
             model=model_name,
-            messages=inputs["messages"],
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant. Be descriptive and clear."},
+                *inputs["messages"]
+            ],
             stream=True,
+            temperature=0.7,
+            max_tokens=1024,
         )
         response_text = ""
         for chunk in completion:
@@ -50,26 +58,26 @@ def get_pipeline(model_name):
     return "chat"
 
 
-def registry(name: str, token: str | None = None, **kwargs):
+def registry(name: str, token: str | None = None, base_url: str | None = None, **kwargs):
     """
-    Create a Gradio Interface for a model on OpenAI.
+    Create a Gradio Interface for a model on Hyperbolic.
 
     Parameters:
-        - name (str): The name of the OpenAI model.
-        - token (str, optional): The API key for OpenAI.
+        - name (str): The name of the model.
+        - token (str, optional): The Hyperbolic API key. If not provided, will look for HYPERBOLIC_API_KEY env variable.
+        - base_url (str, optional): The base URL for the Hyperbolic API.
     """
-    api_key = token or os.environ.get("OPENAI_API_KEY")
+    api_key = token or os.environ.get("HYPERBOLIC_API_KEY")
     if not api_key:
-        raise ValueError("OPENAI_API_KEY environment variable is not set.")
+        raise ValueError("API key is not set. Please provide a token or set HYPERBOLIC_API_KEY environment variable.")
 
     pipeline = get_pipeline(name)
     inputs, outputs, preprocess, postprocess = get_interface_args(pipeline)
-    fn = get_fn(name, preprocess, postprocess, api_key)
+    fn = get_fn(name, preprocess, postprocess, api_key, base_url)
 
     if pipeline == "chat":
         interface = gr.ChatInterface(fn=fn, **kwargs)
     else:
-        # For other pipelines, create a standard Interface (not implemented yet)
         interface = gr.Interface(fn=fn, inputs=inputs, outputs=outputs, **kwargs)
 
     return interface
