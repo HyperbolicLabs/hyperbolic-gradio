@@ -34,7 +34,7 @@ gr.load(
 
 Run the Python file, and you should see a Gradio Interface connected to the model on Hyperbolic AI!
 
-![ChatInterface](https://github.com/HyperbolicLabs/hyperbolic-gradio/blob/master/chatinterface.png)
+![ChatInterface](https://raw.githubusercontent.com/HyperbolicLabs/hyperbolic-gradio/master/chatinterface.png)
 
 # Customization 
 
@@ -52,7 +52,7 @@ gr.load(
     examples=["Explain quantum gravity to a 5-year old.", "How many R are there in the word Strawberry?"]
 ).launch()
 ```
-![ChatInterface with customizations](https://github.com/HyperbolicLabs/hyperbolic-gradio/blob/master/hyperbolic-gradio.png)
+![ChatInterface with customizations](https://raw.githubusercontent.com/HyperbolicLabs/hyperbolic-gradio/master/hyperbolic-gradio.png)
 
 # Composition
 
