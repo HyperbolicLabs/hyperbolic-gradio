@@ -7,7 +7,8 @@ name = "hyperbolic-gradio"
 version = "0.0.1"
 description = "A Python package for creating Gradio applications with Hyperbolic AI models"
 authors = [
-    { name = "AK", email = "ahsen.khaliq@gmail.com" }
+    { name = "AK", email = "ahsen.khaliq@gmail.com" },
+    { name = "YuchenJin", email = "yuchenj@cs.washington.edu"}
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -22,8 +23,8 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/AK391/hyperbolic-gradio"
-repository = "https://github.com/AK391/hyperbolic-gradio"
+homepage = "https://github.com/HyperbolicLabs/hyperbolic-gradio"
+repository = "https://github.com/HyperbolicLabs/hyperbolic-gradio"
 
 [project.optional-dependencies]
 dev = ["pytest"]
