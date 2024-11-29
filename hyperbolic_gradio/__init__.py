@@ -3,7 +3,7 @@ from openai import OpenAI
 import gradio as gr
 from typing import Callable
 
-__version__ = "0.0.3"
+__version__ = "0.0.5"
 
 
 def get_fn(model_name: str, preprocess: Callable, postprocess: Callable, api_key: str, base_url: str = None):
@@ -16,7 +16,6 @@ def get_fn(model_name: str, preprocess: Callable, postprocess: Callable, api_key
         completion = client.chat.completions.create(
             model=model_name,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant. Be descriptive and clear."},
                 *inputs["messages"]
             ],
             stream=True,
