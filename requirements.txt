@@ -1,2 +1,4 @@
-openai
+# openai>=1.0 is required: the package uses the v1 client surface
+# (`from openai import OpenAI`), which does not exist in openai<1.0.
+openai>=1.0
 gradio==5.5.0
