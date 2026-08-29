@@ -19,7 +19,10 @@ classifiers = [
 ]
 dependencies = [
     "gradio>=5.5.0",
-    "openai",
+    # The v1 client surface (`from openai import OpenAI`, `OpenAIError`) is only
+    # available in openai>=1.0; an unbounded requirement allowed a 0.x release to
+    # satisfy the dependency and fail at import time.
+    "openai>=1.0",
 ]
 
 [project.urls]
